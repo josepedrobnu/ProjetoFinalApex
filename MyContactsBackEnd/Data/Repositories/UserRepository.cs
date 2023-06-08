@@ -26,6 +26,8 @@ namespace Data.Repositories
 
         public void DeleteUser(User user)
         {
+           
+
             DbContext.Users.Remove(user);
 
             DbContext.SaveChanges();
@@ -33,9 +35,15 @@ namespace Data.Repositories
 
         public List<User> GetUsers()
         {
-            return  DbContext.Users.ToList();
+            return  DbContext.Users.Include(usuario => usuario.Contacts).ToList();
 
         }
+
+        public User GetById(int id)
+        {
+            return DbContext.Users.FirstOrDefault(user => user.Id == id);
+        }
+
 
         public void UpdateUser(User user)
         {

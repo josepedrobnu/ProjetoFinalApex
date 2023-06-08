@@ -1,14 +1,14 @@
-﻿using Data.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Utils.Dtos.User;
 
 namespace Services.Interfaces
 {
-    public interface  IUserService
+    public interface IUserService
     {
-        void CreateUser(User user);
-        List<User> GetUsers();
-        void UpdateUser(User user);
-        void DeleteUser(User user);
+        void CreateUser(UserCreateRequestDto userCreateDto);
+        List<UserResponseDto> GetUsers();
+        bool UpdateUser(UserUpdateRequestDto userUpdateDto);
+        bool DeleteUser(int id);
 
     }
 }
