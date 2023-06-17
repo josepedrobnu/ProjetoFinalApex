@@ -10,46 +10,49 @@ namespace Data.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        public ApiDbContext DbContext { get; set; }
+        private readonly ApiDbContext _dbContext;
 
         public UserRepository(ApiDbContext dbContext)
         {
-            DbContext = dbContext;
+            _dbContext = dbContext;
         }
 
-        public void CreateUser(User user)
+        public async Task CreateAsync(User user)
         {
-            DbContext.Users.Add(user);
-
-            DbContext.SaveChanges();
+            await _dbContext.Users.AddAsync(user);
         }
 
-        public void DeleteUser(User user)
+        public void Delete(User user)
         {
-           
-
-            DbContext.Users.Remove(user);
-
-            DbContext.SaveChanges();
-        }
-
-        public List<User> GetUsers()
-        {
-            return  DbContext.Users.Include(usuario => usuario.Contacts).ToList();
+            _dbContext.Users.Remove(user);
 
         }
 
-        public User GetById(int id)
+        public async Task<List<User>> GetAllAsync()
         {
-            return DbContext.Users.FirstOrDefault(user => user.Id == id);
+            return await _dbContext.Users.Include(usuario => usuario.Contacts).ToListAsync();
+
+        }
+
+        public async Task<User> GetByIdAsync(int id)
+        {
+            return await _dbContext.Users.FirstOrDefaultAsync(user => user.Id == id);
+        }
+
+        public async Task<User> GetByEmailAndPasswordAsync(string email, string password)
+        {
+            return await _dbContext.Users.FirstOrDefaultAsync(user => user.Email == email && user.Password == password);
         }
 
 
-        public void UpdateUser(User user)
+        public void Update(User user)
         {
-            DbContext.Users.Update(user);
+            _dbContext.Users.Update(user);
+        }
 
-            DbContext.SaveChanges();
+        public async Task SaveChangesAsync() 
+        {
+           await _dbContext.SaveChangesAsync();
         }
     }
 }
