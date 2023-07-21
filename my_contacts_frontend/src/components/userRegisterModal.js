@@ -41,19 +41,14 @@ export default function UserRegisterModal({ closeModal }) {
                     <h2>Cadaste-se</h2>
                     <p>É rápido e fácil.</p>
                     Nome:
-                    <input
-                        defaultValue={name}
-                        onChange={(event) => { setName(event.target.value) }}
+                    <input onChange={(event) => { setName(event.target.value) }}                                          
                     />
                     Email:
-                    <input
-                        defaultValue={email}
-                        onChange={(event) => { setEmail(event.target.value) }}
+                    <input onChange={(event) => { setEmail(event.target.value) }}
                     />
                     Senha:
                     <input
                         type='password'
-                        defaultValue={password}
                         onChange={(event) => { setPassword(event.target.value) }}
                     />
                     <div className='modal-buttons'>
